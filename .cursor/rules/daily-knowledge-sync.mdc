@@ -1,0 +1,27 @@
+---
+description: 宇树30天学习每日流程（知识预写+代码需求+同步）
+alwaysApply: true
+---
+
+# 宇树 30 天学习 · 每日流程
+
+学习根目录：`D:\unitree-cpp-linux-30days`
+正式周期：2026-08-18 ~ 2026-09-16
+邮箱：`zhanglei_104@outlook.com`
+
+## 知识已预写
+
+完整基础知识在 `notes/knowledge/`（含整体规划与 day01–day30）。
+用户可先通读审阅规划；**不要默认每天长篇重讲**。
+
+## 每日标准流程
+
+1. **开始**：用户说「开始今天学习」→ **必须同时给出 C++ 需求 + Linux 需求**（各含目标/步骤/验收），并链到 `PLAN.md` 当日行与 `notes/knowledge/dayXX.md`；仅当用户要求「先讲」或明显缺概念时再精讲。
+2. **时间盒**：默认 C++ ~100min + Linux ~70min；两边都要有最小可交付（Linux 至少 `linux-notes.md`）。
+3. **编码中**：卡住再针对性提示，避免直接贴完整标准答案（除非用户要对照）。
+4. **学完**：用户说「今天学完了」→ 写 `notes/YYYY-MM-DD.md`（含双轨收获）→ Notion「每日知识卡」→ 邮件正文给 `zhanglei_104@outlook.com`（未配 SMTP 则给可粘贴正文，勿谎称已发送）→ 提醒 `PROGRESS.md`（两边都完成才勾）。
+
+## Notion
+
+- 主页：https://app.notion.com/p/3bf503fbd69f81b8b622f96163176f95
+- data_source：`collection://a496a243-eb2b-48b5-b89b-004acfcea121`

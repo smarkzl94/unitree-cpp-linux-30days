@@ -1,0 +1,36 @@
+# Build & binaries
+build/
+cmake-build-*/
+out/
+*.o
+*.obj
+*.exe
+*.out
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+a.out
+mystring_test
+*_test
+
+# IDE / OS
+.vs/
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.user
+.DS_Store
+Thumbs.db
+
+# Logs & temp
+*.log
+*.tmp
+*.swp
+*~
+
+# Sanitizer / coverage
+*.gcda
+*.gcno
+default.profraw
