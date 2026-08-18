@@ -25,13 +25,13 @@
 - 分支：`main`
 - 已完成：本地 `git init` + 首次提交
 
-## Remote（待你确认仓库 URL 后写上）
-
-创建公开仓库后把地址填在这里，例如：
+## Remote
 
 ```text
-https://github.com/<你的用户名>/unitree-cpp-linux-30days
+https://github.com/smarkzl94/unitree-cpp-linux-30days
 ```
+
+已关联：`origin` → `main` 跟踪远程。
 
 ## Notion
 
