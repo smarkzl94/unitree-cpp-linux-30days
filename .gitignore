@@ -1,3 +1,6 @@
+# Portable toolchain (local install, not for git)
+/tools/
+
 # Build & binaries
 build/
 cmake-build-*/
