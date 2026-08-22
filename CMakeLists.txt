@@ -7,3 +7,4 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 add_subdirectory(week1-cpp-basics/day02-smart-ptr)
 add_subdirectory(week1-cpp-basics/day03-dynarray)
+add_subdirectory(week1-cpp-basics/day04-scheduler)
