@@ -6,7 +6,7 @@
 
 1. 学完后说：「今天学完了，同步 Notion 和邮箱」
 2. 助手会：
-   - 写 `notes/YYYY-MM-DD.md`
+   - 写 `notes/daily/YYYY-MM-DD.md`
    - 同步到 Notion「每日知识卡」
    - 在聊天里给出可直接粘贴到 Outlook 的邮件标题 + 正文
 

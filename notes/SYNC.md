@@ -4,7 +4,7 @@
 
 ## 每日知识卡模板
 
-文件位置：`notes/YYYY-MM-DD.md`（例：`notes/2026-08-18.md`）
+文件位置：`notes/daily/YYYY-MM-DD.md`（例：`notes/daily/2026-08-18.md`）
 
 ```md
 # YYYY-MM-DD · Day XX · 主题

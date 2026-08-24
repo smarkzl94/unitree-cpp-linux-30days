@@ -47,4 +47,4 @@ day01-mystring/
 ## 完成后
 
 1. 勾选 `../../PROGRESS.md` 里的 day01（C++ + Linux 都完成才勾）
-2. 笔记：`notes/2026-08-18.md`（或喊我同步）
+2. 笔记：`notes/daily/2026-08-18.md`（或喊我同步）
