@@ -3,13 +3,13 @@
 勾选表示：**当天 C++ 与 Linux 两块都完成**。
 
 ## Week 1
-- [ ] 08-18 day01 · C++ MyString + Linux 目录/权限/man
-- [ ] 08-19 day02 · C++ 智能指针 + Linux ps/top/kill
-- [ ] 08-20 day03 · C++ DynArray + Linux 管道/grep/find
-- [ ] 08-21 day04 · C++ 调度器 + Linux build.sh/chmod
-- [ ] 08-22 day05 · C++ lambda + Linux 软链/du
-- [ ] 08-23 day06 · C++ RingBuffer + Linux /proc
-- [ ] 08-24 day07 · C++ 复盘 + Linux week1_smoke.sh
+- [x] 08-18 day01 · C++ MyString + Linux 目录/权限/man
+- [x] 08-19 day02 · C++ 智能指针 + Linux ps/top/kill
+- [x] 08-20 day03 · C++ DynArray + Linux 管道/grep/find
+- [x] 08-21 day04 · C++ 调度器 + Linux build.sh/chmod
+- [x] 08-22 day05 · C++ lambda + Linux 软链/du
+- [x] 08-23 day06 · C++ RingBuffer + Linux /proc
+- [x] 08-24 day07 · C++ 复盘 + Linux week1_smoke.sh
 
 ## Week 2
 - [ ] 08-25 day08 · C++ 安全队列 + Linux 线程视角
