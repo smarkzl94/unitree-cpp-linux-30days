@@ -16,7 +16,8 @@
 ## 索引
 
 - 预习索引：[knowledge/README.md](./knowledge/README.md)
-- Week1 复盘：[recap/week1-recap.md](./recap/week1-recap.md)
+- Week1 复盘（按天，C++ + Linux）：[recap/week1-recap.md](./recap/week1-recap.md)
+- Week1 Linux 专项（命令速查表）：[recap/week1-linux.md](./recap/week1-linux.md)
 - 容器手册：[topics/cpp-stl-containers.md](./topics/cpp-stl-containers.md)
 
 ## 每日知识卡模板
