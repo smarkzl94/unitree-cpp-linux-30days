@@ -12,8 +12,8 @@
 - [x] 08-24 day07 · C++ 复盘 + Linux week1_smoke.sh
 
 ## Week 2
-- [ ] 08-25 day08 · C++ 安全队列 + Linux 线程视角
-- [ ] 08-26 day09 · C++ MPMC + Linux ulimit/nice
+- [x] 08-25 day08 · C++ 安全队列 + Linux 线程视角
+- [x] 08-26 day09 · C++ MPMC + Linux ulimit/nice
 - [ ] 08-27 day10 · C++ 死锁 + Linux gdb/strace
 - [ ] 08-28 day11 · C++ atomic + Linux lscpu
 - [ ] 08-29 day12 · C++ 传感器 + Linux 时钟
