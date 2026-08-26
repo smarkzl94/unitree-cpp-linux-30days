@@ -65,7 +65,103 @@ top -H -p $(pgrep -n your_program)   # 只盯某一个进程的线程
 
 ---
 
-# 二、C++：ThreadSafeQueue
+# 二、C++：今天会用到的基础（先读再写队列）
+
+正课是 mutex / 条件变量。下面这些是写 `ThreadSafeQueue` **绕不开的语法和对象模型**，看懂再往下。
+
+## 0.1 进程 vs 线程（和上午 Linux 对上）
+
+一个**进程**有自己的地址空间、一个 PID。进程里可以有多条**线程**，共享同一块内存（全局变量、堆上的队列）。Linux 里线程叫 LWP；C++ 的 `std::thread` 跑起来就是多出来的 LWP。
+
+共享内存 = 能方便传数据，也 = 两个人同时改同一个 `std::queue` 会炸。所以后面才要锁。
+
+## 0.2 `std::thread`：一构造就开跑，必须 `join`
+
+```cpp
+#include <thread>
+#include <iostream>
+
+void worker() { std::cout << "hi\n"; }
+
+int main() {
+    std::thread t(worker);  // 到这里子线程已经在跑
+    t.join();               // 主线程等到 t 结束；不 join 也不 detach → 析构时 terminate
+}
+```
+
+- 传函数名、或 **lambda**：`std::thread t([&] { q.wait_and_pop(x); });`
+- **`[&]`**：按引用抓住外面的 `q`。队列活在 `main` 的栈上，线程必须在 `q` 销毁前 `join` 完，否则悬空。
+- 今天不要 `detach`：人跑了你管不着，shutdown 也对不上。
+
+链接：`g++ -std=c++17 -pthread ...`
+
+## 0.3 `.` 和 `->`
+
+| 你手里是 | 用 | 例子 |
+|----------|----|------|
+| 对象、引用 | `.` | `q.push(1);` `lk.lock();` |
+| 指针、`unique_ptr` | `->` | `p->push(1);` |
+
+今天队列、锁、条件变量都是**成员对象**（`q_`、`m_`、`cv_`），一律 `.`。
+
+## 0.4 引用参数 `T& out`
+
+```cpp
+bool wait_and_pop(T& out) {
+    out = std::move(q_.front());  // 写回调用者的变量
+    return true;                  // 另用 bool 表示成功/失败
+}
+```
+
+`T&` 不是拷贝：函数里改 `out` 就是改外面那个变量。失败时（shutdown 且空）返回 `false`，不要去 `pop` 空队列。
+
+## 0.5 模板皮毛 `ThreadSafeQueue<T>`
+
+和 Day06 `RingBuffer<T>` 一样：`T` 是占位，「什么类型的队列」。实现放**头文件**（模板要在用到的地方能看见完整定义）。
+
+```cpp
+ThreadSafeQueue<int> q;   // T = int
+```
+
+成员写成 `std::queue<T> q_;` 即可。
+
+## 0.6 `std::move` 和 `std::queue`
+
+`std::queue`：`push` / `front` / `pop`（`pop` 只删不返回元素，所以先 `front` 再 `pop`）。
+
+大对象不要白拷贝：`q_.push(std::move(x));`、`out = std::move(q_.front());`。`int` 搬不搬差不多；养成习惯，后面传感器帧会变大。
+
+## 0.7 RAII：作用域结束 = 析构 = 解锁
+
+Day02 的 `unique_ptr`：离开作用域自动 `delete`。锁也是同一招：
+
+```cpp
+{
+    std::lock_guard<std::mutex> lk(m_);  // 构造：加锁
+    q_.push(x);
+}  // 析构：解锁。中途 return / 抛异常也会走这里
+```
+
+不要手写 `m.lock()` / `m.unlock()`。`cv.wait` 必须中途放锁，所以要能「暂时解锁」的 **`unique_lock`**，不能用死拿着的 `lock_guard`。细节见下一节。
+
+## 0.8 类里的成员和下划线
+
+```cpp
+class ThreadSafeQueue {
+    std::queue<T> q_;
+    std::mutex m_;
+    std::condition_variable cv_;
+    bool shutdown_ = false;
+};
+```
+
+末尾 `_` 只是习惯：这是对象自己的数据。`public` 里写 `push` 等接口；上面这些放 `private`，外面不许直接摸队列。
+
+建议头文件：`<queue>` `<mutex>` `<condition_variable>` `<utility>`（`std::move`）。
+
+---
+
+# 三、C++：ThreadSafeQueue
 
 ## 为什么需要线程安全队列
 

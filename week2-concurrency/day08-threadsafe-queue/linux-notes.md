@@ -67,19 +67,13 @@
 
 ## 上机记录（对着自己的程序抄一次）
 
-程序名：  
-PID：  
-`std::thread` 工人数 + 主线程 = 期望 NLWP：  
+环境：Windows `g++` 跑通 `main.cpp` 三场景。  
+程序名：`day08`  
+`std::thread` 工人数 + 主线程：场景 1 为 主 + 生产 + 消费（期望 NLWP≈3，视运行时段而定）
 
-`ps -eLf` 摘要（PID / 几条 LWP / NLWP）：
+`ps -eLf` / `top -H`：概念小考已写；**对着本进程的真实输出尚未粘贴**（补课可再贴）。
 
-```
-（粘贴或摘几行）
-```
-
-`top -H -p <PID>` 看到什么（线程行数、CPU 大概）：
-
-join 结束后进程是否消失：
+验收：`ok: spsc 1..100` / `ok: shutdown wakes waiter` / `ok: try_pop` / `all passed`
 
 ---
 
