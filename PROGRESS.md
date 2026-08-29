@@ -16,7 +16,7 @@
 - [x] 08-26 day09 · C++ MPMC + Linux ulimit/nice
 - [x] 08-27 day10 · C++ 死锁 + Linux gdb/strace
 - [x] 08-28 day11 · C++ atomic + Linux lscpu
-- [ ] 08-29 day12 · C++ 传感器 + Linux 时钟
+- [x] 08-29 day12 · C++ 传感器 + Linux 时钟
 - [ ] 08-30 day13 · C++ 延迟丢包 + Linux tail -f 日志
 - [ ] 08-31 day14 · C++ 复盘 + Linux CMake/ldd
 
