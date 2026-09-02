@@ -138,6 +138,8 @@ cmake --build build-rel
 
 上机任务：一个可复用的多文件 CMake，Debug 下开 ASan；故意造一次崩溃，用 gdb 打出回溯。
 
+逐句说明、抽库、ASan、`Threads`、易错，单独成册：[topics/cmake-lists.md](../topics/cmake-lists.md)。下面只保留当天最小骨架。
+
 ## 1. 最小 `CMakeLists.txt` 在说什么
 
 ```cmake
