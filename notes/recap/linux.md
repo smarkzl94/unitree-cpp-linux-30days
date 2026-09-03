@@ -51,8 +51,11 @@
 | `pgrep -a 程序名` | 按名字查 PID 和命令行 |
 | `kill PID` | ★ SIGTERM，请它自己退出 |
 | `kill -9 PID` | SIGKILL，内核直接干掉；卡住时先不要用 |
+| `ps -o pid,ppid,stat,cmd -p <PID>` | 只看这一个进程：自己、爸爸、STAT、命令 |
 
 `ps aux` 一行一个进程；`ps -eLf` 一行一条线程。写成 `-elf`（小写 l）是 long，不按线程拆。堵在 `wait` 时 CPU 可以很低。
+
+STAT 看**第一字母**：`R` 可跑，`S` 在睡（还活着），`Z` 已退出、父还没 `wait`（僵尸）。`<defunct>` 也是僵尸。收尸只能父进程代码里 `waitpid`；`kill -9` 僵尸没用。`kill -9` 父之后 Z 常被 PID 1 收掉，那是托底。僵尸 ≠ 孤儿（父先死、子还活着）。这些 `ps` 要在 Linux/WSL 里跑。
 
 ---
 

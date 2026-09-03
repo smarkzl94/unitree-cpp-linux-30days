@@ -167,6 +167,7 @@
 4. 环满覆盖 vs 任务队列阻塞；无界没有背压。  
 5. 何时 atomic、何时 mutex；`volatile` 不能替代。  
 6. 延迟和丢包：同一单调时钟相减；seq 间隙和 overwrite 分列。
+7. 僵尸：子死父不 wait；fork 复制、exec 替换；perror 不在 unistd。
 
 ---
 
@@ -187,3 +188,24 @@
 | 帧用墙钟、间隔用单调 | 混减无意义 |
 | `size()` 当延迟 | 延迟是时间差 |
 | 不更新 `last_print` | 每拍都打日志 |
+| 对着僵尸 `kill -9` | 找父进程 `waitpid` |
+| `fork` 后不看 `pid` | 父子会各跑一遍后半段 |
+| `perror` 当 unistd | 它在 `<cstdio>` |
+
+---
+
+## 12. POSIX：进程与文件
+
+| 概念 / API | 作用 |
+|------------|------|
+| POSIX | Unix 风格系统调用约定，不是一种语言 |
+| fd | ★ 进程里的整数门票；每进程一张表；`fork` 时拷贝 |
+| `open` / `read` / `write` / `close` | 文件；短读写按返回值循环 |
+| `fork` | ★ 系统调用（`<unistd.h>`）；一次返回两次：子 0，父得子 PID |
+| `pid_t` | 装 PID 的整数；定义在 `<sys/types.h>` |
+| `exec*` | ★ 不新建进程，换成新程序；失败才返回 |
+| `waitpid` | ★ 父领退出状态；不领就是僵尸 |
+| `_exit` | 子进程 exec 失败用它，少跑 atexit |
+| `perror` | ★ 在 `<cstdio>`，把 `errno` 打成句子 |
+
+进程隔离地址空间和 fd；线程共享。`fork` 不是 `std::thread`。
