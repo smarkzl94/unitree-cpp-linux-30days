@@ -205,6 +205,19 @@ gdb 的 thread 是 OS 线程。用户态锁睡着时内核常见 **futex** / `FU
 
 ---
 
+## 13. 看见 IPC
+
+| 命令 | 作用 |
+|------|------|
+| `ipcs` / `ipcs -m` | ★ System V 消息队列/信号量/共享内存 |
+| `ls -l /dev/shm` | ★ POSIX 共享内存文件 |
+| `df -h /dev/shm` | `/dev/shm` 这块 tmpfs 还剩多少空间 |
+| `ls -l /proc/<PID>/fd` | ★ 这个进程打开了啥；匿名 pipe 是 `pipe:[…]` |
+
+`ipcs` 为空不等于没 IPC。匿名管道没有名字。
+
+---
+
 ## 易错清单
 
 | 现象 | 原因 / 正确做法 |
