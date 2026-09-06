@@ -207,6 +207,10 @@
 | `waitpid` | ★ 父领退出状态；不领就是僵尸 |
 | `_exit` | 子进程 exec 失败用它，少跑 atexit |
 | `perror` | ★ 在 `<cstdio>`，把 `errno` 打成句子 |
+| 匿名 `pipe` | ★ 父子字节流；看 `/proc/PID/fd`；`ipcs` 里没有 |
+| POSIX shm | `/dev/shm` 上的文件；`mmap` 同一页 |
+| System V shm | ★ `ipcs -m` |
+| FIFO | 有路径的管道，`ls -l` 类型 `p` |
 
 进程隔离地址空间和 fd；线程共享。`fork` 不是 `std::thread`。
 
