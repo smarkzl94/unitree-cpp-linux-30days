@@ -49,8 +49,10 @@
 | `top -H` | ★ 按**线程**直播 |
 | `top -H -p <PID>` | 只看某一个进程里的线程 |
 | `pgrep -a 程序名` | 按名字查 PID 和命令行 |
-| `kill PID` | ★ SIGTERM，请它自己退出 |
-| `kill -9 PID` | SIGKILL，内核直接干掉；卡住时先不要用 |
+| `kill PID` | ★ 默认 SIGTERM（15），请它退出；和 `kill -TERM PID` 是同一回事 |
+| `kill -TERM PID` | 显式写出 TERM，仍是 15 |
+| `kill -INT PID` | SIGINT（2），和 Ctrl+C 同类 |
+| `kill -9 PID` | ★ SIGKILL，内核直接干掉，不能捕获；卡住时先不要用 |
 | `ps -o pid,ppid,stat,cmd -p <PID>` | 只看这一个进程：自己、爸爸、STAT、命令 |
 
 `ps aux` 一行一个进程；`ps -eLf` 一行一条线程。写成 `-elf`（小写 l）是 long，不按线程拆。堵在 `wait` 时 CPU 可以很低。
