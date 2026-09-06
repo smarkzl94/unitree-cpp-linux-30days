@@ -209,3 +209,16 @@
 | `perror` | ★ 在 `<cstdio>`，把 `errno` 打成句子 |
 
 进程隔离地址空间和 fd；线程共享。`fork` 不是 `std::thread`。
+
+---
+
+## 13. 日志（给 Hub 用）
+
+| 概念 / API | 作用 |
+|------------|------|
+| Error / Info | ★ Error 必看；Info 启动退出或每秒一行 |
+| 最低级别开关 | 低于它的不输出；测速关 Info |
+| mutex 护一行 | 多线程别把两行搅在一起 |
+| handler 里不打日志 | ★ 只改 atomic；主线程再 LOG |
+
+不要每帧 Info。打开日志文件失败就退回 stderr。

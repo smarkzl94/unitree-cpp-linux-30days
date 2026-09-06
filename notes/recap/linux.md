@@ -169,8 +169,10 @@ nice 大约 -20（最急）～ 19（最客气），默认约 0。只改自己的
 | `(gdb) bt` | backtrace：当前线程调用栈 |
 | `(gdb) thread N` | 切到线程 N，再 `bt` |
 | `(gdb) thread apply all bt` | ★ 所有线程各打一份 bt（死锁首选） |
-| `strace -p <PID>` | 打印系统调用 |
+| `strace -p <PID>` | ★ 贴到已运行进程，打印系统调用 |
 | `strace -f -p <PID>` | ★ follow 子进程/线程 |
+
+卡住排查顺序：`ps`（在不在、STAT）→ `top`/`top -H`（忙还是睡）→ `strace -p`（堵在哪个 syscall）→ 仍像逻辑再 gdb。CPU 很低却卡住，先 strace。排障可开 strace，测速要关。
 
 gdb 的 thread 是 OS 线程。用户态锁睡着时内核常见 **futex** / `FUTEX_WAIT`。
 
