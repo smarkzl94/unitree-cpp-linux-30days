@@ -20,6 +20,7 @@
 - C++ 概念速查：[recap/cpp.md](./recap/cpp.md)
 - 容器手册：[topics/cpp-stl-containers.md](./topics/cpp-stl-containers.md)
 - CMakeLists 写法：[topics/cmake-lists.md](./topics/cmake-lists.md)
+- 盲区 / 错题：[topics/gaps.md](./topics/gaps.md)
 
 ## 每日知识卡模板
 

@@ -40,6 +40,19 @@
 - [ ] 09-15 day29 · 弱项 Demo C++ + Linux
 - [ ] 09-16 day30 · 模拟面试 + 现场 Linux 排障一手
 
+## Hub 代码进度（2026-09-12 归档）
+
+课程日勾选仍表示「那天 C+++Linux 都做完」。下面只记 `telemetry-hub/` 已接通的部分（概念 Day24–27 已过，上机未全部勾完）。
+
+- [x] 产 + 处理 + `latest`（第 1 步）
+- [x] TCP 定长头 + `hub_client`（第 2 步）
+- [x] 运行时 `--log=` 级别 + 每秒 hz/drop
+- [x] 控制线程跳变打标（方案 C，`flags`）
+- [ ] 滑动平均 / 限幅
+- [ ] Day26 压测数字（P50/P99）
+- [ ] Day27 `run.sh` / strip / client 重连循环
+- [ ] `journalctl` 或日志轮转脚本（有 WSL 再补）
+
 ## 月末验收
 - [ ] Telemetry Hub 可演示
 - [ ] 有 gdb/strace 排查记录

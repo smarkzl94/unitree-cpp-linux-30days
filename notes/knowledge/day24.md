@@ -86,7 +86,37 @@ Week2 有 100Hz 传感器和 RingBuffer，Week4 有 TCP 和定长头。今天第
 
 上机任务：接到 `telemetry-hub/`；最小目标是客户端不断显示最新状态。
 
-## 1. 三条线程，各干一件事
+图和口述也写在 [telemetry-hub/README.md](../../week4-project/telemetry-hub/README.md)，面试画同一张。
+
+## 1. 架构：产 / 处理 / 发
+
+`net` 和 `control` 可以合并成一条线程，那是实现细节；讲的时候三块职责仍要分开。
+
+```mermaid
+flowchart LR
+  sensor["传感线程\n100Hz 产帧\nseq + 单调时间戳"]
+  ring["RingBuffer\n有界缓冲\n满了覆盖最旧"]
+  control["处理线程\n滤波 / 异常\n写入 latest 槽"]
+  net["网络线程\nTCP 定长头\n只发 latest"]
+  client["客户端\nhub_client\n看到状态在更新"]
+
+  sensor -->|"push"| ring
+  ring -->|"pop"| control
+  control -->|"latest"| net
+  net -->|"send"| client
+```
+
+`main` 线程：`sigaction(SIGINT / SIGTERM)` → handler **只写** `g_running = false` → 唤醒 → `join` → flush / close。不要在 handler 里打日志、加锁、`join`。
+
+| 块 | 干什么 | 对应课 |
+|----|--------|--------|
+| **产** | 传感线程约 100Hz 造一帧（`seq`、单调时间戳、几个 float），`push` 进 RingBuffer。环满不阻塞，覆盖最旧。 | Day12 |
+| **处理** | 取出最新帧，轻处理（去抖、限幅、标异常），写入 `latest` 槽。今天可以近乎透传。 | Day13 / Day25 |
+| **发** | `socket → bind → listen → accept`，按「4 字节长度 + payload」发 `latest`。网络慢就丢中间帧。 | Day22 / Day23 |
+
+讲不清就是把三件事糊成了一个 `while` 循环：谁定频、谁决定丢哪一帧、谁负责字节边界。
+
+今天上机对应三条线程可以这样切：
 
 ```text
 sensor_thread     100Hz 产 SensorFrame → RingBuffer::push（满则覆盖最旧）
@@ -95,7 +125,16 @@ net_thread        accept/recv 拆包可选；定时把 latest_ 按 Day23 帧发�
 main              注册信号，join，close
 ```
 
-也可以 net 和 control 合并，但「产 / 处理 / 发」职责要能在 README 里画出三块。面试就画这张图。
+四天往**同一份** `telemetry-hub/` 里加，不要每天另起工程：
+
+| 课程日 | 加的东西 | 跑起来先看 |
+|--------|----------|------------|
+| Day24 | 接通产线：三条线程 + TCP 发最新 | `ss -lntp` 有 LISTEN；`top -H` 线程都在 |
+| Day25 | 处理层滤波 / 异常；日志级别可关 | 日志关掉后 CPU 是否降下来 |
+| Day26 | 压测：延迟 P50/P99、丢包，修 1 个点 | `top` / `perf stat`，对照今天基线 |
+| Day27 | README 编译运行、断线重连 | `ldd`、一键 `run.sh`，别人 5 分钟复现 |
+
+**30 秒口述：** 传感线程定频产帧进有界环，满了覆盖最旧；处理线程取最新做轻处理写进 `latest`；网络线程按定长头把 `latest` 发给客户端，网络慢就丢中间帧。Ctrl+C 时 handler 只置一个 `atomic`，主线程唤醒、join、刷日志再退出。排障先 `ss` 看在不在听，再 `top -H` 看线程，卡住用 `strace`。
 
 `SensorFrame` 沿用 Day19/23：`seq`、`stamp_ns`、几个 float。时间戳用单调时钟，方便 Day26 算延迟。
 
